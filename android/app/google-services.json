@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "979308630995",
+    "project_id": "fir-use-app-ef63d",
+    "storage_bucket": "fir-use-app-ef63d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979308630995:android:b8846c66f7a038e6e95526",
+        "android_client_info": {
+          "package_name": "com.example.firebase_training_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "979308630995-pdkqh5sb4e5mgoegasoeupvf77um82si.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIJbfsGHAwGhbzR8D5Zperc0pbFQ5Bt8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "979308630995-pdkqh5sb4e5mgoegasoeupvf77um82si.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
