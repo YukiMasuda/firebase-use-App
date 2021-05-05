@@ -11,6 +11,9 @@ class BookList extends StatelessWidget {
       body: StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance.collection('books').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
+          if (!snapshot.hasData) return const Text('Loading...');
+
           return ListView(
             children: snapshot.data.documents.map((DocumentSnapshot document) {
               return ListTile(
