@@ -16,7 +16,11 @@ class AddMemoPage extends StatelessWidget{
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
                   //ここを条件分岐したい
-                  model.addTextToFirestore();
+                  if (model.currentText != null){
+                    model.addTextToFirestore();
+                  }else {
+                    print('空です');
+                  }
                   Navigator.pop(context);
                 },
               );

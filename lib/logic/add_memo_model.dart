@@ -4,10 +4,6 @@ import 'package:flutter/material.dart';
 
 class AddMemoModel extends ChangeNotifier {
   String currentText;
-  void changeText(){
-
-    notifyListeners();
-  }
 
 
   //追加機能を作成

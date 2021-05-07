@@ -32,19 +32,22 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return ChangeNotifierProvider<MainModel>(
-      create: (_) => MainModel(),
+      create: (_) => MainModel()..getTexts(),
       child: Scaffold(
         appBar: AppBar(
           title: Text('メモ一覧'),
         ),
         body: Consumer<MainModel>
           (builder: (context, model, child) {
+            //Stringのリスト
             final texts = model.texts;
-            final listTiles = texts.map((text) => ListTile(
-              title: Text(text),
-            )).toList();
+            final listTiles = texts.map((doc) => ListTile(title: Text(doc),))
+                .toList();
 
             return ListView(
+              children:
+                listTiles
+              ,
             );
           }
         ),
