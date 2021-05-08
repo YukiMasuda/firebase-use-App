@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_training_app/Pages/add_memo_page.dart';
 import 'package:firebase_training_app/logic/add_memo_model.dart';
 import 'package:firebase_training_app/logic/main_model.dart';
@@ -18,7 +19,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         // ブラックにするとダメになっちゃった
-
       ),
       home: MyHomePage(),
     );
@@ -26,48 +26,58 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider<AddMemoModel>(
+        create: (_) => AddMemoModel(),
+        builder: (context, snapshot) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('メモ一覧'),
+            ),
+            body: StreamBuilder<QuerySnapshot>(
+              stream: Firestore.instance.collection('texts').snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                return ListView(
+                  children:
+                      snapshot.data.documents.map((DocumentSnapshot document) {
+                    // TODO: documentにnullが入っている時のハンドリングを行う
+                    if (!snapshot.hasData) {
+                      return Text('loading...');
+                    }
+                    print(document['text']);
 
-    return ChangeNotifierProvider<MainModel>(
-      create: (_) => MainModel()..getTexts(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('メモ一覧'),
-        ),
-        body: Consumer<MainModel>
-          (builder: (context, model, child) {
-            //Stringのリスト
-            final texts = model.texts;
-            final listTiles = texts.map((doc) => ListTile(title: Text(doc),))
-                .toList();
+                    return ListTile(
+                      title: Text(document['text']),
+                      onTap: () {
+                        // print(model.currentText + '孝行もの');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddMemoPage(
+                                    passedText: document['text'],
+                                    passedID: document.documentID)));
+                      },
+                    );
+                  }).toList(),
+                );
+              },
+            ),
 
-            return ListView(
-              children:
-                listTiles
-              ,
-            );
-          }
-        ),
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.blue,
-          child: IconButton(
-            icon: Icon(Icons.add),
-            color: Colors.white,
-            onPressed: (){
-              Navigator.push(
-                  context,
-                MaterialPageRoute(builder: (context) => AddMemoPage())
-              );
-              print('メモ追加へ');
-            },
-          ),
-        ),
-      ),
-    );
+            bottomNavigationBar: BottomAppBar(
+              color: Colors.blue,
+              child: IconButton(
+                icon: Icon(Icons.add),
+                color: Colors.white,
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AddMemoPage()));
+                  print('メモ追加へ');
+                },
+              ),
+            ),
+          );
+        });
   }
 }
-
-
