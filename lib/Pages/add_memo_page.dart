@@ -22,6 +22,10 @@ class AddMemoPage extends StatelessWidget{
           leading: Consumer<AddMemoModel>(
             builder: (context, model, child) {
               model.currentText = passedText;
+              if (passedID == null){
+                model.focus = false;
+                print(model.focus);
+              }
               return IconButton(
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
@@ -57,6 +61,7 @@ class AddMemoPage extends StatelessWidget{
             return Padding(
               padding: const EdgeInsets.all(10.0),
               child: TextField(
+                autofocus: model.focus,
                 // 初期値を持つ
                 controller: TextEditingController(text: passedText),
 

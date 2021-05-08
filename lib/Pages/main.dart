@@ -36,29 +36,32 @@ class MyHomePage extends StatelessWidget {
               title: Text('メモ一覧'),
             ),
             body: StreamBuilder<QuerySnapshot>(
-              stream: Firestore.instance.collection('texts').snapshots(),
+              stream: Firestore.instance.collection('texts').orderBy('createdAt', descending: true).snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 return ListView(
-                  children:
-                      snapshot.data.documents.map((DocumentSnapshot document) {
+                  children: snapshot.data.documents.map((DocumentSnapshot document) {
                     // TODO: documentにnullが入っている時のハンドリングを行う
                     if (!snapshot.hasData) {
                       return Text('loading...');
                     }
                     print(document['text']);
 
-                    return ListTile(
-                      title: Text(document['text']),
-                      onTap: () {
-                        // print(model.currentText + '孝行もの');
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AddMemoPage(
-                                    passedText: document['text'],
-                                    passedID: document.documentID)));
-                      },
+                    return Column(
+                      children: [
+                        ListTile(
+                          title: Text(document['text']),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddMemoPage(
+                                        passedText: document['text'],
+                                        passedID: document.documentID)));
+                          },
+                        ),
+                        Divider(),
+                      ],
                     );
                   }).toList(),
                 );

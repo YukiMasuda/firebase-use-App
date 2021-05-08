@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 class AddMemoModel extends ChangeNotifier {
   String currentText;
+  bool focus = true;
+
   final firestore = Firestore.instance.collection('texts');
 
   //追加機能を作成
