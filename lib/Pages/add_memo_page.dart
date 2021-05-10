@@ -13,8 +13,6 @@ class AddMemoPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    // print(passedText + '楽しいよ');
-    // print(passedID + '楽しくないよ');
     return ChangeNotifierProvider<AddMemoModel>(
       create: (_) => AddMemoModel(),
       child: Scaffold(
@@ -60,24 +58,38 @@ class AddMemoPage extends StatelessWidget{
         body: Consumer<AddMemoModel>(builder: (context, model, child) {
             return Padding(
               padding: const EdgeInsets.all(10.0),
-              child: TextField(
-                autofocus: model.focus,
-                // 初期値を持つ
-                controller: TextEditingController(text: passedText),
+              child: Column(
+                children: [
+                  TextField(
+                    autofocus: model.focus,
+                    // 初期値を持つ
+                    controller: TextEditingController(text: passedText),
 
-                //改行を可能にするコード
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                ),
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-                onChanged: (text){
-                  //変わるたびにStateに管理してもらいたい->そもそも管理できている→変数代入でいけそう
-                    print(model.currentText = text);
-                },
+                    //改行を可能にするコード
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                    ),
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                    onChanged: (text){
+                      //変わるたびにStateに管理してもらいたい->そもそも管理できている→変数代入でいけそう
+                        print(model.currentText = text);
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text('画像を挿入'),
+                      onPressed: (){
+                      model.getImage();
+                      }
+                  ),
+                  Container(
+                    width: 300,
+                      height: 300,
+                      child: model.image == null ? Text('表示するものが無いんじゃ'): Image.file(model.image)),
+                ],
               ),
             );
           }

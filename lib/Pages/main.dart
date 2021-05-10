@@ -51,6 +51,10 @@ class MyHomePage extends StatelessWidget {
                       children: [
                         ListTile(
                           title: Text(document['text']),
+                          leading: document['imageURL'] == null ? Container(
+                            color: Colors.red,
+                            width: 60,
+                          ) :Image.network(document['imageURL']),
                           onTap: () {
                             Navigator.push(
                                 context,
