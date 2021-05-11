@@ -28,7 +28,6 @@ class AddMemoPage extends StatelessWidget{
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
 
-                  //このロジックは間違ってない
                   if (passedID == null){
                     if(model.currentText == null || model.currentText == ''){
                       //挙動なし
@@ -64,10 +63,9 @@ class AddMemoPage extends StatelessWidget{
                     autofocus: model.focus,
                     // 初期値を持つ
                     controller: TextEditingController(text: passedText),
-
                     //改行を可能にするコード
                     keyboardType: TextInputType.multiline,
-                    maxLines: null,
+                    maxLines: 3,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                     ),

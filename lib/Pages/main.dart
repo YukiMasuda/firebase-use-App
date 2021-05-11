@@ -36,25 +36,29 @@ class MyHomePage extends StatelessWidget {
               title: Text('メモ一覧'),
             ),
             body: StreamBuilder<QuerySnapshot>(
-              stream: Firestore.instance.collection('texts').orderBy('createdAt', descending: true).snapshots(),
+              stream: Firestore.instance
+                  .collection('texts')
+                  .orderBy('createdAt', descending: true)
+                  .snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 return ListView(
-                  children: snapshot.data.documents.map((DocumentSnapshot document) {
+                  children:
+                      snapshot.data.documents.map((DocumentSnapshot document) {
                     // TODO: documentにnullが入っている時のハンドリングを行う
                     if (!snapshot.hasData) {
                       return Text('loading...');
                     }
-                    print(document['text']);
-
                     return Column(
                       children: [
                         ListTile(
                           title: Text(document['text']),
-                          leading: document['imageURL'] == null ? Container(
-                            color: Colors.red,
-                            width: 60,
-                          ) :Image.network(document['imageURL']),
+                          leading: document['imageURL'] == null
+                              ? Container(
+                                  color: Colors.red,
+                                  width: 60,
+                                )
+                              : Image.network(document['imageURL']),
                           onTap: () {
                             Navigator.push(
                                 context,
@@ -71,7 +75,6 @@ class MyHomePage extends StatelessWidget {
                 );
               },
             ),
-
             bottomNavigationBar: BottomAppBar(
               color: Colors.blue,
               child: IconButton(
@@ -80,7 +83,6 @@ class MyHomePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => AddMemoPage()));
-                  print('メモ追加へ');
                 },
               ),
             ),

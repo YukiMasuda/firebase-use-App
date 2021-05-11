@@ -10,7 +10,6 @@ class AddMemoModel extends ChangeNotifier {
   String currentText;
   File image;
   bool focus = true;
-  String downloadURL;
   final picker = ImagePicker();
 
 
@@ -18,7 +17,8 @@ class AddMemoModel extends ChangeNotifier {
 
   //追加機能を作成
   Future addData() async{
-    final imageURL = await _uploadFile();
+    final imageURL = await uploadFile();
+    print('add呼ばれた');
 
     firestore.add(
       {
@@ -43,28 +43,33 @@ class AddMemoModel extends ChangeNotifier {
   }
 
   //FirebaseStorageへアップロード
-  Future<String> _uploadFile() async {
+  Future<String> uploadFile() async {
     if (image == null){
+      print('アップロードでnull');
       return '';
     }
+    print('アップロード呼ばれた');
     final storage = FirebaseStorage();
-    final ref = storage.ref().child('texts').child('text');
+    final ref = storage.ref().child('texts').child('ko');
     final snapshot = await ref.putFile(image).onComplete;
     final downloadURL = await snapshot.ref.getDownloadURL();
+    print(downloadURL);
     return downloadURL;
+
+    // FirebaseStorage().ref().child('こう').putFile(image).onComplete
   }
 
-  //imagePickerで画像を取ってくる
+  //imagePickerで画像を選択し、imageFILEに挿入
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       image = File(pickedFile.path);
+      notifyListeners();
       print('画像を選択しました');
     }else{
       print('画像がありません');
     }
   }
 
-
-
+//todo 画像をアップロードするコード書いたけどうまくいかない。コード自体は難しくないが呪文レベル。(FirebaseStorage)
 }
