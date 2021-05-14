@@ -1,11 +1,11 @@
-import 'package:firebase_training_app/Pages/main.dart';
-import 'package:firebase_training_app/logic/add_memo_model.dart';
-import 'package:flutter/cupertino.dart';
+
+import 'package:firebase_training_app/AddPage/add_memo_model.dart';
+import 'package:firebase_training_app/MainPage/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AddMemoPage extends StatelessWidget{
-  final myApp = MyApp();
+  final myApp = MainPage();
 
   AddMemoPage({this.passedText, this.passedID});
   String passedText;

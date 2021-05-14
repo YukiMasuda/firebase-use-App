@@ -55,8 +55,6 @@ class AddMemoModel extends ChangeNotifier {
     final downloadURL = await snapshot.ref.getDownloadURL();
     print(downloadURL);
     return downloadURL;
-
-    // FirebaseStorage().ref().child('こう').putFile(image).onComplete
   }
 
   //imagePickerで画像を選択し、imageFILEに挿入

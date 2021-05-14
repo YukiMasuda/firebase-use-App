@@ -1,16 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_training_app/Pages/add_memo_page.dart';
-import 'package:firebase_training_app/logic/add_memo_model.dart';
-import 'package:firebase_training_app/logic/main_model.dart';
-import 'package:firebase_training_app/sample/book_list_model.dart';
+import 'package:firebase_training_app/AddPage/add_memo_model.dart';
+import 'package:firebase_training_app/AddPage/add_memo_page.dart';
+import 'package:firebase_training_app/SignUp/sign_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MainPage());
+// }
 
-class MyApp extends StatelessWidget {
+class MainPage extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -81,8 +80,7 @@ class MyHomePage extends StatelessWidget {
                 icon: Icon(Icons.add),
                 color: Colors.white,
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddMemoPage()));
+                  Navigator.of(context).pushNamed('/add_memo');
                 },
               ),
             ),
