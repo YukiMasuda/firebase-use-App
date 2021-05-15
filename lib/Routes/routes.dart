@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 //ルート管理画面
 void main (){
   runApp(MaterialApp(
-    initialRoute: '/home',
+    initialRoute: '/',
     routes: <String, WidgetBuilder> {
       '/': (BuildContext context) => SignUpPage(),
       '/home': (BuildContext context) => MainPage(),

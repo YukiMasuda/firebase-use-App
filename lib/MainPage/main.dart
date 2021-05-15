@@ -64,7 +64,10 @@ class MyHomePage extends StatelessWidget {
                                 MaterialPageRoute(
                                     builder: (context) => AddMemoPage(
                                         passedText: document['text'],
-                                        passedID: document.documentID)));
+                                        passedID: document.documentID
+                                    )
+                                )
+                            );
                           },
                         ),
                         Divider(),
@@ -81,6 +84,13 @@ class MyHomePage extends StatelessWidget {
                 color: Colors.white,
                 onPressed: () {
                   Navigator.of(context).pushNamed('/add_memo');
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => AddMemoPage()
+                  //     )
+                  // );
+
                 },
               ),
             ),
