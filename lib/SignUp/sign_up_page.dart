@@ -69,7 +69,11 @@ class SignUpPage extends StatelessWidget{
               FlatButton(
                   child: Text('OK'),
                   onPressed: (){
-                    Navigator.of(context).pushNamed('/home');
+                    if (title == '登録完了しました'){
+                      Navigator.of(context).pushNamed('/home');
+                    }else{
+                      Navigator.of(context).pop();
+                    }
                   })
             ],
           );
