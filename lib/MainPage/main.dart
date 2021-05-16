@@ -5,10 +5,6 @@ import 'package:firebase_training_app/SignUp/sign_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// void main() {
-//   runApp(MainPage());
-// }
-
 class MainPage extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -23,6 +19,10 @@ class MainPage extends StatelessWidget {
     );
   }
 }
+
+//AddMemoのMaterialAppを消した
+
+
 
 class MyHomePage extends StatelessWidget {
   @override
@@ -83,14 +83,12 @@ class MyHomePage extends StatelessWidget {
                 icon: Icon(Icons.add),
                 color: Colors.white,
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/add_memo');
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => AddMemoPage()
-                  //     )
-                  // );
-
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AddMemoPage()
+                    )
+                  );
                 },
               ),
             ),

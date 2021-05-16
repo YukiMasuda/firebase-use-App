@@ -7,13 +7,12 @@ import 'package:flutter/material.dart';
 //ルート管理画面
 void main (){
   runApp(MaterialApp(
-    initialRoute: '/',
+    initialRoute: '/home',
     routes: <String, WidgetBuilder> {
       '/': (BuildContext context) => SignUpPage(),
       '/home': (BuildContext context) => MainPage(),
       '/add_memo': (BuildContext context) => AddMemoPage(),
     },
   )
-
   );
 }
