@@ -23,7 +23,6 @@ class SignUpModel extends ChangeNotifier{
         password: password
     )).user;
 
-
     final email = user.email;
     Firestore.instance.collection('users').add(
         {

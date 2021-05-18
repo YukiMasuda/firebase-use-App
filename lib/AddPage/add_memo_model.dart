@@ -69,5 +69,9 @@ class AddMemoModel extends ChangeNotifier {
     }
   }
 
+  DateTime now = DateTime.now();
+
+
+
 //todo 画像をアップロードするコード書いたけどうまくいかない。コード自体は難しくないが呪文レベル。(FirebaseStorage)
 }

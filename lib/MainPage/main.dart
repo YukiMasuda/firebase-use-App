@@ -1,9 +1,11 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_training_app/AddPage/add_memo_model.dart';
 import 'package:firebase_training_app/AddPage/add_memo_page.dart';
-import 'package:firebase_training_app/SignUp/sign_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class MainPage extends StatelessWidget {
   // This widget is the root of your application.
@@ -32,6 +34,7 @@ class MyHomePage extends StatelessWidget {
         builder: (context, snapshot) {
           return Scaffold(
             appBar: AppBar(
+              centerTitle: true,
               title: Text('メモ一覧'),
             ),
             body: StreamBuilder<QuerySnapshot>(
@@ -41,39 +44,73 @@ class MyHomePage extends StatelessWidget {
                   .snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
-                return ListView(
-                  children:
-                      snapshot.data.documents.map((DocumentSnapshot document) {
-                    // TODO: documentにnullが入っている時のハンドリングを行う
-                    if (!snapshot.hasData) {
-                      return Text('loading...');
-                    }
-                    return Column(
-                      children: [
-                        ListTile(
-                          title: Text(document['text']),
-                          leading: document['imageURL'] == null
-                              ? Container(
-                                  color: Colors.red,
-                                  width: 60,
-                                )
-                              : Image.network(document['imageURL']),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AddMemoPage(
-                                        passedText: document['text'],
-                                        passedID: document.documentID
-                                    )
-                                )
-                            );
-                          },
+                return Container(
+                  //Body全体の色指定
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 30,right: 30, left: 30),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(30)),
+                      child: Container(
+
+                        child: Container(
+                          color: Colors.grey,
+                          child: ListView(
+                            children:
+                                snapshot.data.documents.map((DocumentSnapshot document) {
+                              // TODO: documentにnullが入っている時のハンドリングを行う
+                              if (!snapshot.hasData) {
+                                //ダメだった
+                              }
+                              return Consumer<AddMemoModel>(
+                                builder: (context, model, child) {
+                                  //横から削除が出るようにしているやつ
+                                  return Slidable(
+                                    actionPane: SlidableDrawerActionPane(),
+                                    actionExtentRatio: 0.25,
+                                    child: Column(
+                                      children: [
+                                        ListTile(
+                                          title: Text(
+                                            document['text'],
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => AddMemoPage(
+                                                        passedText: document['text'],
+                                                        passedID: document.documentID
+                                                    )
+                                                )
+                                            );
+                                          },
+                                        ),
+                                        //Listの間の線を入れている
+                                        Divider(),
+                                      ],
+                                    ),
+                                    //削除のやつ
+                                    secondaryActions: <Widget>[
+                                      IconSlideAction(
+                                        caption: '削除',
+                                        color: Colors.red,
+                                        icon: Icons.delete,
+                                        onTap: (){
+                                          model.deleteData(document.documentID);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                }
+                              );
+                            }).toList(),
+                          ),
                         ),
-                        Divider(),
-                      ],
-                    );
-                  }).toList(),
+                      ),
+                    ),
+                  ),
                 );
               },
             ),
@@ -94,5 +131,12 @@ class MyHomePage extends StatelessWidget {
             ),
           );
         });
+  }
+}
+
+class SearchTextWidget extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+
   }
 }

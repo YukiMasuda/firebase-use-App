@@ -53,6 +53,33 @@ class AddMemoPage extends StatelessWidget{
                 );
               }
             ),
+            actions: <Widget>[
+              Consumer<AddMemoModel>(
+                builder: (context, model, child) {
+                  return IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: (){
+                        return AlertDialog(
+                          title: Text('削除しますか？'),
+                          actions: <Widget>[
+                            FlatButton(
+                                child: Text('はい'),
+                                onPressed: (){
+                                  model.deleteData(passedID);
+                                  Navigator.of(context).pop();
+                                }),
+                            FlatButton(
+                                child: Text('キャンセル'),
+                                onPressed: (){
+                                  Navigator.of(context).pop();
+                                })
+                          ],
+                        );
+                      }
+                      );
+                }
+              )
+            ],
           ),
           body: Consumer<AddMemoModel>(builder: (context, model, child) {
               return Padding(
@@ -77,16 +104,16 @@ class AddMemoPage extends StatelessWidget{
                           print(model.currentText = text);
                       },
                     ),
-                    RaisedButton(
-                      child: Text('画像を挿入'),
-                        onPressed: (){
-                        model.getImage();
-                        }
-                    ),
-                    Container(
-                      width: 300,
-                        height: 300,
-                        child: model.image == null ? Text('表示するものが無いんじゃ'): Image.file(model.image)),
+                    // RaisedButton(
+                    //   child: Text('画像を挿入'),
+                    //     onPressed: (){
+                    //     model.getImage();
+                    //     }
+                    // ),
+                  //   Container(
+                  //     width: 300,
+                  //       height: 300,
+                  //       child: model.image == null ? Text('表示するものが無いんじゃ'): Image.file(model.image)),
                   ],
                 ),
               );
@@ -95,4 +122,32 @@ class AddMemoPage extends StatelessWidget{
         ),
       );
   }
+
+
+  Future _showDialog(
+      BuildContext context,
+      String title,
+      ){
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: Text(title),
+            actions: <Widget>[
+              FlatButton(
+                  child: Text('OK'),
+                  onPressed: (){
+
+                  }),
+              FlatButton(
+                  child: Text('キャンセル'),
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                })
+            ],
+          );
+        }
+    );
+  }
+
 }
